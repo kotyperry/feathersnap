@@ -230,17 +230,17 @@ var timeline = (function MasterTimeline() {
 // ====================================================================================================
 // Wait for GSAP to load before initializing
 function initBanner() {
-  if (typeof gsap !== 'undefined') {
+  if (typeof gsap !== "undefined") {
     timeline.init();
   } else {
-    console.log('Waiting for GSAP to load...');
+    console.log("Waiting for GSAP to load...");
     setTimeout(initBanner, 50);
   }
 }
 
 // Start initialization when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initBanner);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBanner);
 } else {
   initBanner();
 }

@@ -256,12 +256,12 @@ var timeline = (function MasterTimeline() {
 
 // Wait for GSAP to load before initializing
 function initBanner() {
-  if (typeof gsap !== 'undefined') {
+  if (typeof gsap !== "undefined") {
     document.querySelector(".banner").style.display = "block";
     timeline.init();
     setInterval(timeline.get().updateStats, 33);
   } else {
-    console.log('Waiting for GSAP to load...');
+    console.log("Waiting for GSAP to load...");
     setTimeout(initBanner, 50);
   }
 }
