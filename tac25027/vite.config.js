@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import { glob } from "glob";
 import injectBannerControls from "./vite-plugins/inject-banner-controls.js";
+import copyBannerScripts from "./vite-plugins/copy-banner-scripts.js";
 
 // Get target banner from environment variable or command line argument
 const targetBanner =
@@ -41,7 +42,7 @@ const isDev = process.env.NODE_ENV !== "production";
 const singleBannerDev = isDev && targetBanner && bannerDirs.length === 1;
 
 export default defineConfig({
-  plugins: [injectBannerControls()],
+  plugins: [injectBannerControls(), copyBannerScripts()],
   root: singleBannerDev ? bannerDirs[0].dir : ".",
   base: "./",
   build: {

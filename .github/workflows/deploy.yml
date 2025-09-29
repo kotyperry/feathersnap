@@ -86,4 +86,3 @@ jobs:
           name: template-validation
           path: _template/
           retention-days: 7
-
