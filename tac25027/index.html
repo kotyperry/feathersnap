@@ -9,68 +9,168 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background: #f5f5f5;
         }
+        
+        /* Header with hamburger menu */
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             background: white;
-            border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .header h1 { margin: 0 0 10px 0; color: #333; }
-        .header p { margin: 0; color: #666; }
-        .banners {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
         }
-        .banner-card {
+        
+        .header-info h1 { 
+            margin: 0 0 5px 0; 
+            color: #333; 
+            font-size: 24px;
+        }
+        
+        .header-info p { 
+            margin: 0; 
+            color: #666; 
+            font-size: 14px;
+        }
+        
+        /* Hamburger Button */
+        .hamburger {
+            background: #007bff;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .hamburger:hover {
+            background: #0056b3;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 20px;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 10px 0;
+            min-width: 200px;
+            max-height: 0;
             overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-        .banner-header {
-            padding: 15px;
+        
+        .dropdown-menu.active {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .dropdown-item:hover {
             background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
         }
-        .banner-title {
-            font-weight: 600;
+        
+        .dropdown-item.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+        }
+        
+        .banner-viewer {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .banner-info {
+            margin-bottom: 20px;
+        }
+        
+        .banner-info h2 {
             margin: 0 0 5px 0;
             color: #333;
+            font-size: 20px;
         }
-        .banner-size {
+        
+        .banner-info p {
+            margin: 0;
             color: #666;
             font-size: 14px;
-            margin: 0;
         }
-        .banner-preview {
-            padding: 20px;
-            text-align: center;
-            background: #fff;
-        }
-        .banner-frame {
+        
+        .banner-frame-container {
             display: inline-block;
+            margin: 20px 0;
+        }
+        
+        .banner-frame {
             border: 2px solid #ddd;
             background: #f8f9fa;
             position: relative;
+            display: inline-block;
         }
+        
         .banner-frame iframe {
             display: block;
             border: none;
         }
+        
         .banner-actions {
-            padding: 15px;
-            text-align: center;
-            background: #f8f9fa;
+            margin-top: 20px;
         }
+        
         .btn {
             display: inline-block;
-            padding: 8px 16px;
+            padding: 10px 20px;
             margin: 0 5px;
             background: #007bff;
             color: white;
@@ -78,31 +178,132 @@
             border-radius: 4px;
             font-size: 14px;
             transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
         }
-        .btn:hover { background: #0056b3; }
+        
+        .btn:hover { 
+            background: #0056b3; 
+        }
+        
         .btn-secondary {
             background: #6c757d;
         }
-        .btn-secondary:hover { background: #545b62; }
+        
+        .btn-secondary:hover { 
+            background: #545b62; 
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-info h1 {
+                font-size: 18px;
+            }
+            
+            .header-info p {
+                font-size: 12px;
+            }
+            
+            .banner-viewer {
+                padding: 15px;
+            }
+            
+            .banner-frame {
+                max-width: 100%;
+                overflow: auto;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>banners</h1>
-        <p>Project: 12-fid-19478 | Generated: 9/29/2025</p>
+        <div class="header-content">
+            <div class="header-info">
+                <h1>banners</h1>
+                <p>Project: 25-tac25027 | Generated: 9/29/2025</p>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown">
+            
+            <a class="dropdown-item active" 
+               data-banner="0"
+               onclick="loadBanner(0)">
+                970x90 (970×90)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="1"
+               onclick="loadBanner(1)">
+                970x250 (970×250)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="2"
+               onclick="loadBanner(2)">
+                728x90 (728×90)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="3"
+               onclick="loadBanner(3)">
+                336x280 (336×280)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="4"
+               onclick="loadBanner(4)">
+                320x50 (320×50)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="5"
+               onclick="loadBanner(5)">
+                320x480 (320×480)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="6"
+               onclick="loadBanner(6)">
+                300x600 (300×600)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="7"
+               onclick="loadBanner(7)">
+                300x50 (300×50)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="8"
+               onclick="loadBanner(8)">
+                300x250 (300×250)
+            </a>
+            
+            <a class="dropdown-item" 
+               data-banner="9"
+               onclick="loadBanner(9)">
+                160x600 (160×600)
+            </a>
+            
+        </div>
     </div>
     
-    <div class="banners">
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">970x90</h3>
-                <p class="banner-size">970 × 90 pixels</p>
+    <div class="main-content">
+        <div class="banner-viewer">
+            <div class="banner-info" id="banner-info">
+                <h2>970x90</h2>
+                <p>970 × 90 pixels</p>
             </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 970px; height: 90px;">
+            <div class="banner-frame-container">
+                <div class="banner-frame" id="banner-frame" style="width: 970px; height: 90px;">
                     <iframe 
-                        src="banners/970x90index.html" 
+                        id="banner-iframe"
+                        src="banners/970x90/index.html" 
                         width="970" 
                         height="90"
                         title="970x90 Preview">
@@ -110,200 +311,79 @@
                 </div>
             </div>
             <div class="banner-actions">
-                <a href="banners/970x90index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/970x90" target="_blank" class="btn btn-secondary">View Files</a>
+                <a href="banners/970x90/index.html" target="_blank" class="btn" id="view-full-btn">View Full</a>
+                <a href="banners/970x90" target="_blank" class="btn btn-secondary" id="view-files-btn">View Files</a>
             </div>
         </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">970x250</h3>
-                <p class="banner-size">970 × 250 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 970px; height: 250px;">
-                    <iframe 
-                        src="banners/970x250index.html" 
-                        width="970" 
-                        height="250"
-                        title="970x250 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/970x250index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/970x250" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">728x90</h3>
-                <p class="banner-size">728 × 90 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 728px; height: 90px;">
-                    <iframe 
-                        src="banners/728x90index.html" 
-                        width="728" 
-                        height="90"
-                        title="728x90 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/728x90index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/728x90" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">336x280</h3>
-                <p class="banner-size">336 × 280 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 336px; height: 280px;">
-                    <iframe 
-                        src="banners/336x280index.html" 
-                        width="336" 
-                        height="280"
-                        title="336x280 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/336x280index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/336x280" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">320x50</h3>
-                <p class="banner-size">320 × 50 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 320px; height: 50px;">
-                    <iframe 
-                        src="banners/320x50index.html" 
-                        width="320" 
-                        height="50"
-                        title="320x50 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/320x50index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/320x50" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">320x480</h3>
-                <p class="banner-size">320 × 480 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 320px; height: 480px;">
-                    <iframe 
-                        src="banners/320x480index.html" 
-                        width="320" 
-                        height="480"
-                        title="320x480 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/320x480index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/320x480" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">300x600</h3>
-                <p class="banner-size">300 × 600 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 300px; height: 600px;">
-                    <iframe 
-                        src="banners/300x600index.html" 
-                        width="300" 
-                        height="600"
-                        title="300x600 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/300x600index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/300x600" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">300x50</h3>
-                <p class="banner-size">300 × 50 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 300px; height: 50px;">
-                    <iframe 
-                        src="banners/300x50index.html" 
-                        width="300" 
-                        height="50"
-                        title="300x50 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/300x50index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/300x50" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">300x250</h3>
-                <p class="banner-size">300 × 250 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 300px; height: 250px;">
-                    <iframe 
-                        src="banners/300x250index.html" 
-                        width="300" 
-                        height="250"
-                        title="300x250 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/300x250index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/300x250" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
-        <div class="banner-card">
-            <div class="banner-header">
-                <h3 class="banner-title">160x600</h3>
-                <p class="banner-size">160 × 600 pixels</p>
-            </div>
-            <div class="banner-preview">
-                <div class="banner-frame" style="width: 160px; height: 600px;">
-                    <iframe 
-                        src="banners/160x600index.html" 
-                        width="160" 
-                        height="600"
-                        title="160x600 Preview">
-                    </iframe>
-                </div>
-            </div>
-            <div class="banner-actions">
-                <a href="banners/160x600index.html" target="_blank" class="btn">View Full</a>
-                <a href="banners/160x600" target="_blank" class="btn btn-secondary">View Files</a>
-            </div>
-        </div>
-        
     </div>
+    
+    <script>
+        // Banner data
+        const banners = [{"name":"970x90","width":970,"height":90,"path":"banners/970x90"},{"name":"970x250","width":970,"height":250,"path":"banners/970x250"},{"name":"728x90","width":728,"height":90,"path":"banners/728x90"},{"name":"336x280","width":336,"height":280,"path":"banners/336x280"},{"name":"320x50","width":320,"height":50,"path":"banners/320x50"},{"name":"320x480","width":320,"height":480,"path":"banners/320x480"},{"name":"300x600","width":300,"height":600,"path":"banners/300x600"},{"name":"300x50","width":300,"height":50,"path":"banners/300x50"},{"name":"300x250","width":300,"height":250,"path":"banners/300x250"},{"name":"160x600","width":160,"height":600,"path":"banners/160x600"}];
+        let currentBanner = 0;
+        
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const dropdown = document.getElementById('dropdown');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            dropdown.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header')) {
+                hamburger.classList.remove('active');
+                dropdown.classList.remove('active');
+            }
+        });
+        
+        // Load banner function
+        function loadBanner(index) {
+            currentBanner = index;
+            const banner = banners[index];
+            
+            // Update active state in menu
+            document.querySelectorAll('.dropdown-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+            
+            // Update banner info
+            document.getElementById('banner-info').innerHTML = `
+                <h2>${banner.name}</h2>
+                <p>${banner.width} × ${banner.height} pixels</p>
+            `;
+            
+            // Update frame size
+            const frame = document.getElementById('banner-frame');
+            frame.style.width = banner.width + 'px';
+            frame.style.height = banner.height + 'px';
+            
+            // Update iframe
+            const iframe = document.getElementById('banner-iframe');
+            iframe.src = banner.path + '/index.html';
+            iframe.width = banner.width;
+            iframe.height = banner.height;
+            iframe.title = banner.name + ' Preview';
+            
+            // Update buttons
+            document.getElementById('view-full-btn').href = banner.path + '/index.html';
+            document.getElementById('view-files-btn').href = banner.path;
+            
+            // Close menu
+            hamburger.classList.remove('active');
+            dropdown.classList.remove('active');
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentBanner > 0) {
+                loadBanner(currentBanner - 1);
+            } else if (e.key === 'ArrowRight' && currentBanner < banners.length - 1) {
+                loadBanner(currentBanner + 1);
+            }
+        });
+    </script>
 </body>
 </html>
