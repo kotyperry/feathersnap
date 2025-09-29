@@ -1,0 +1,108 @@
+name: PR Preview Build
+
+on:
+  pull_request:
+    branches: [main, master]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "fid20738/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: ./fid20738
+        run: npm ci
+
+      - name: Process templates and build banners
+        working-directory: ./fid20738
+        run: |
+          npm run process-templates
+          npm run build
+          npm run review
+
+      - name: Create deployment zips
+        working-directory: ./fid20738
+        run: npm run deploy
+
+      - name: Upload banner review
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-${{ github.event.number }}-review
+          path: fid20738/_review/
+          retention-days: 14
+
+      - name: Upload deployment zips
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-${{ github.event.number }}-deploy
+          path: fid20738/_deploy/
+          retention-days: 14
+
+      - name: Comment PR with preview links
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const pr_number = context.payload.pull_request.number;
+
+            const comment = `## 🎨 Banner Preview Ready!
+
+            Your banner changes have been built and are ready for review:
+
+            ### 📁 Artifacts Available:
+            - **Review Page**: Download \`pr-${pr_number}-review\` artifact to preview banners
+            - **Deployment Zips**: Download \`pr-${pr_number}-deploy\` artifact for ad platform deployment
+
+            ### 🔗 How to Preview:
+            1. Download the \`pr-${pr_number}-review\` artifact from this workflow run
+            2. Extract the files locally
+            3. Open \`index.html\` in your browser to see all banners
+
+            ### 📊 Build Summary:
+            - ✅ Templates processed
+            - ✅ Banners built successfully  
+            - ✅ Review page generated
+            - ✅ Deployment zips created
+
+            *This comment will be updated on each push to the PR.*`;
+
+            // Find existing comment
+            const comments = await github.rest.issues.listComments({
+              owner,
+              repo,
+              issue_number: pr_number,
+            });
+
+            const existingComment = comments.data.find(
+              comment => comment.body.includes('🎨 Banner Preview Ready!')
+            );
+
+            if (existingComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existingComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pr_number,
+                body: comment
+              });
+            }
+
