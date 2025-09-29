@@ -43,22 +43,12 @@ var timeline = (function MasterTimeline() {
     var mainTl = gsap.timeline({ paused: false, onComplete: updateComplete });
 
     // Check if elements exist
-    console.log("Shape-1 element:", document.querySelector(".shape-1"));
-    console.log("Shape-2 element:", document.querySelector(".shape-2"));
-    console.log("Shape-3 element:", document.querySelector(".shape-3"));
-    console.log("Shape-4 element:", document.querySelector(".shape-4"));
-    console.log("Shape-5 element:", document.querySelector(".shape-5"));
-    console.log("Bird element:", document.querySelector(".bird"));
-    console.log("Feeder element:", document.querySelector(".feeder"));
-    console.log(
       "Birds-are-cool element:",
       document.querySelector(".birds-are-cool")
     );
-    console.log(
       "Shipping-is-not element:",
       document.querySelector(".shipping-is-not")
     );
-    console.log("Logo element:", document.querySelector(".logo"));
 
     // Set initial positions and create timeline with label
     mainTl
@@ -290,7 +280,6 @@ function initBanner() {
     timeline.init();
     setInterval(timeline.get().updateStats, 33);
   } else {
-    console.log("Waiting for GSAP to load...");
     setTimeout(initBanner, 50);
   }
 }

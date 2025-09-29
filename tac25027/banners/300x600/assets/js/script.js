@@ -34,14 +34,12 @@ var timeline = (function MasterTimeline() {
   }
 
   function initTimeline() {
-    console.log("Initializing timeline...");
     document.querySelector("#ad .banner").style.display = "block";
     document.getElementById("ad").addEventListener("click", doClickTag);
     createTimeline();
   }
 
   function createTimeline() {
-    console.log("Creating timeline...");
 
     // Check if elements exist
     var sun = document.querySelector(".sun");
@@ -50,7 +48,6 @@ var timeline = (function MasterTimeline() {
     var solarIncluded = document.querySelector(".solar-included");
     var logo = document.querySelector(".logo");
 
-    console.log("Elements found:", {
       sun: !!sun,
       bird: !!bird,
       brightIdea: !!brightIdea,
@@ -132,7 +129,6 @@ var timeline = (function MasterTimeline() {
   }
 
   function updateStart() {
-    console.log("Timeline started");
     var start = new CustomEvent("start", {
       detail: { hasStarted: true },
     });
@@ -140,7 +136,6 @@ var timeline = (function MasterTimeline() {
   }
 
   function updateComplete() {
-    console.log("Timeline completed");
     var complete = new CustomEvent("complete", {
       detail: { hasStopped: true },
     });
@@ -175,7 +170,6 @@ function initBanner() {
   if (typeof gsap !== "undefined") {
     timeline.init();
   } else {
-    console.log("Waiting for GSAP to load...");
     setTimeout(initBanner, 50);
   }
 }

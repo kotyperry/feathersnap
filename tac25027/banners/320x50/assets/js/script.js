@@ -233,7 +233,6 @@ function initBanner() {
   if (typeof gsap !== "undefined") {
     timeline.init();
   } else {
-    console.log("Waiting for GSAP to load...");
     setTimeout(initBanner, 50);
   }
 }

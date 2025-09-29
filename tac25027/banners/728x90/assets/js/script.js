@@ -34,7 +34,6 @@ var timeline = (function MasterTimeline() {
   }
 
   function initTimeline() {
-    console.log("Initializing timeline...");
     document.querySelector("#ad .banner").style.display = "block";
     document.getElementById("ad").addEventListener("click", doClickTag);
 
@@ -59,7 +58,6 @@ var timeline = (function MasterTimeline() {
       if (!element) {
         console.error(`Element not found: ${selector}`);
       } else {
-        console.log(`Element found: ${selector}`, element);
       }
     });
 
@@ -67,18 +65,15 @@ var timeline = (function MasterTimeline() {
   }
 
   function createTimeline() {
-    console.log("Creating timeline...");
     tl = gsap.timeline({
       delay: 0.25,
       onStart: updateStart,
       onComplete: updateComplete,
       onUpdate: updateStats,
     });
-    console.log("Timeline created:", tl);
     // ---------------------------------------------------------------------------
 
     // Set initial positions for elements that will animate in
-    console.log("Setting initial positions...");
     tl.set(".bird", { x: 0, opacity: 0 })
       .set(".phone-container", { y: 150, opacity: 0 })
       .set(".phone-screen", { y: 0, opacity: 1 })
@@ -196,7 +191,6 @@ function initBanner() {
   if (typeof gsap !== "undefined") {
     timeline.init();
   } else {
-    console.log("Waiting for GSAP to load...");
     setTimeout(initBanner, 50);
   }
 }
