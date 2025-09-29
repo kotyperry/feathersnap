@@ -43,6 +43,7 @@ const singleBannerDev = isDev && targetBanner && bannerDirs.length === 1;
 export default defineConfig({
   plugins: [injectBannerControls()],
   root: singleBannerDev ? bannerDirs[0].dir : ".",
+  base: "./",
   build: {
     rollupOptions: {
       input: singleBannerDev ? resolve(bannerDirs[0].dir, "index.html") : input,
