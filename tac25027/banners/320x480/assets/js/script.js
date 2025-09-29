@@ -42,14 +42,6 @@ var timeline = (function MasterTimeline() {
   function createTimeline() {
     var mainTl = gsap.timeline({ paused: false, onComplete: updateComplete });
 
-    // Check if elements exist
-      "Birds-are-cool element:",
-      document.querySelector(".birds-are-cool")
-    );
-      "Shipping-is-not element:",
-      document.querySelector(".shipping-is-not")
-    );
-
     // Set initial positions and create timeline with label
     mainTl
       .addLabel("start")
