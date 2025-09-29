@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./tac25027
-        run: npm ci
+        run: npm install
 
       - name: Process templates and build banners
         working-directory: ./tac25027
