@@ -376,12 +376,17 @@ class ReviewGenerator {
             frame.style.width = banner.width + 'px';
             frame.style.height = banner.height + 'px';
             
-            // Update iframe
-            const iframe = document.getElementById('banner-iframe');
-            iframe.src = banner.path + '/index.html';
-            iframe.width = banner.width;
-            iframe.height = banner.height;
-            iframe.title = banner.name + ' Preview';
+            // Force complete iframe reload by removing and recreating it
+            const oldIframe = document.getElementById('banner-iframe');
+            const newIframe = document.createElement('iframe');
+            newIframe.id = 'banner-iframe';
+            newIframe.src = banner.path + '/index.html';
+            newIframe.width = banner.width;
+            newIframe.height = banner.height;
+            newIframe.title = banner.name + ' Preview';
+            
+            // Replace the old iframe with the new one
+            oldIframe.parentNode.replaceChild(newIframe, oldIframe);
             
             // Update buttons
             document.getElementById('view-full-btn').href = banner.path + '/index.html';

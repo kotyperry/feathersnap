@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
-const path = require('path')
-const { glob } = require('glob')
+const fs = require("fs");
+const path = require("path");
+const { glob } = require("glob");
 
 /**
  * Generate review page for all banners
@@ -10,52 +10,52 @@ const { glob } = require('glob')
  */
 class ReviewGenerator {
   constructor() {
-    this.reviewDir = '_review'
-    this.packageJson = require('../package.json')
+    this.reviewDir = "_review";
+    this.packageJson = require("../package.json");
   }
 
   /**
    * Extract project info from package.json
    */
   getProjectInfo() {
-    const nameParts = this.packageJson.name.split('-')
+    const nameParts = this.packageJson.name.split("-");
     return {
-      year: nameParts[0] || '',
-      clientCode: (nameParts[1] || '').toUpperCase(),
-      jobCode: nameParts[2] || '',
-      title: this.packageJson.title || 'Banner Review',
-      name: this.packageJson.name
-    }
+      year: nameParts[0] || "",
+      clientCode: (nameParts[1] || "").toUpperCase(),
+      jobCode: nameParts[2] || "",
+      title: this.packageJson.title || "Banner Review",
+      name: this.packageJson.name,
+    };
   }
 
   /**
    * Get banner information
    */
   getBannerInfo() {
-    const bannerDirs = glob.sync('banners/*/', { ignore: 'banners/_*' })
-    
-    return bannerDirs.map(dir => {
-      const name = path.basename(dir)
-      const sizeMatch = name.match(/(\d+)x(\d+)/)
-      const width = sizeMatch ? sizeMatch[1] : '300'
-      const height = sizeMatch ? sizeMatch[2] : '250'
-      
+    const bannerDirs = glob.sync("banners/*/", { ignore: "banners/_*" });
+
+    return bannerDirs.map((dir) => {
+      const name = path.basename(dir);
+      const sizeMatch = name.match(/(\d+)x(\d+)/);
+      const width = sizeMatch ? sizeMatch[1] : "300";
+      const height = sizeMatch ? sizeMatch[2] : "250";
+
       return {
         name,
         width: parseInt(width),
         height: parseInt(height),
-        path: dir
-      }
-    })
+        path: dir,
+      };
+    });
   }
 
   /**
    * Generate review HTML page
    */
   generateReviewPage() {
-    const project = this.getProjectInfo()
-    const banners = this.getBannerInfo()
-    
+    const project = this.getProjectInfo();
+    const banners = this.getBannerInfo();
+
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -278,7 +278,9 @@ class ReviewGenerator {
         <div class="header-content">
             <div class="header-info">
                 <h1>${project.title}</h1>
-                <p>Project: ${project.name} | Generated: ${new Date().toLocaleDateString()}</p>
+                <p>Project: ${
+                  project.name
+                } | Generated: ${new Date().toLocaleDateString()}</p>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span>
@@ -287,13 +289,17 @@ class ReviewGenerator {
             </button>
         </div>
         <div class="dropdown-menu" id="dropdown">
-            ${banners.map((banner, index) => `
-            <a class="dropdown-item${index === 0 ? ' active' : ''}" 
+            ${banners
+              .map(
+                (banner, index) => `
+            <a class="dropdown-item${index === 0 ? " active" : ""}" 
                data-banner="${index}"
                onclick="loadBanner(${index})">
                 ${banner.name} (${banner.width}×${banner.height})
             </a>
-            `).join('')}
+            `
+              )
+              .join("")}
         </div>
     </div>
     
@@ -304,7 +310,9 @@ class ReviewGenerator {
                 <p>${banners[0].width} × ${banners[0].height} pixels</p>
             </div>
             <div class="banner-frame-container">
-                <div class="banner-frame" id="banner-frame" style="width: ${banners[0].width}px; height: ${banners[0].height}px;">
+                <div class="banner-frame" id="banner-frame" style="width: ${
+                  banners[0].width
+                }px; height: ${banners[0].height}px;">
                     <iframe 
                         id="banner-iframe"
                         src="${banners[0].path}/index.html" 
@@ -315,8 +323,12 @@ class ReviewGenerator {
                 </div>
             </div>
             <div class="banner-actions">
-                <a href="${banners[0].path}/index.html" target="_blank" class="btn" id="view-full-btn">View Full</a>
-                <a href="${banners[0].path}" target="_blank" class="btn btn-secondary" id="view-files-btn">View Files</a>
+                <a href="${
+                  banners[0].path
+                }/index.html" target="_blank" class="btn" id="view-full-btn">View Full</a>
+                <a href="${
+                  banners[0].path
+                }" target="_blank" class="btn btn-secondary" id="view-files-btn">View Files</a>
             </div>
         </div>
     </div>
@@ -364,12 +376,17 @@ class ReviewGenerator {
             frame.style.width = banner.width + 'px';
             frame.style.height = banner.height + 'px';
             
-            // Update iframe
-            const iframe = document.getElementById('banner-iframe');
-            iframe.src = banner.path + '/index.html';
-            iframe.width = banner.width;
-            iframe.height = banner.height;
-            iframe.title = banner.name + ' Preview';
+            // Force complete iframe reload by removing and recreating it
+            const oldIframe = document.getElementById('banner-iframe');
+            const newIframe = document.createElement('iframe');
+            newIframe.id = 'banner-iframe';
+            newIframe.src = banner.path + '/index.html';
+            newIframe.width = banner.width;
+            newIframe.height = banner.height;
+            newIframe.title = banner.name + ' Preview';
+            
+            // Replace the old iframe with the new one
+            oldIframe.parentNode.replaceChild(newIframe, oldIframe);
             
             // Update buttons
             document.getElementById('view-full-btn').href = banner.path + '/index.html';
@@ -390,28 +407,28 @@ class ReviewGenerator {
         });
     </script>
 </body>
-</html>`
+</html>`;
 
     // Ensure review directory exists
     if (!fs.existsSync(this.reviewDir)) {
-      fs.mkdirSync(this.reviewDir, { recursive: true })
+      fs.mkdirSync(this.reviewDir, { recursive: true });
     }
 
     // Write review page
-    const reviewPath = path.join(this.reviewDir, 'index.html')
-    fs.writeFileSync(reviewPath, html)
-    
-    console.log(`✅ Review page generated: ${reviewPath}`)
-    console.log(`📱 Found ${banners.length} banners`)
-    
-    return reviewPath
+    const reviewPath = path.join(this.reviewDir, "index.html");
+    fs.writeFileSync(reviewPath, html);
+
+    console.log(`✅ Review page generated: ${reviewPath}`);
+    console.log(`📱 Found ${banners.length} banners`);
+
+    return reviewPath;
   }
 }
 
 // Run if called directly
 if (require.main === module) {
-  const generator = new ReviewGenerator()
-  generator.generateReviewPage()
+  const generator = new ReviewGenerator();
+  generator.generateReviewPage();
 }
 
-module.exports = ReviewGenerator
+module.exports = ReviewGenerator;
