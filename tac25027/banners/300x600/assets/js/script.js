@@ -170,4 +170,19 @@ var timeline = (function MasterTimeline() {
 
 // Banner Init
 // ====================================================================================================
-timeline.init();
+// Wait for GSAP to load before initializing
+function initBanner() {
+  if (typeof gsap !== 'undefined') {
+    timeline.init();
+  } else {
+    console.log('Waiting for GSAP to load...');
+    setTimeout(initBanner, 50);
+  }
+}
+
+// Start initialization when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initBanner);
+} else {
+  initBanner();
+}
