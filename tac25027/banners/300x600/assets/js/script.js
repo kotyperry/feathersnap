@@ -40,20 +40,12 @@ var timeline = (function MasterTimeline() {
   }
 
   function createTimeline() {
-
     // Check if elements exist
     var sun = document.querySelector(".sun");
     var bird = document.querySelector(".bird");
     var brightIdea = document.querySelector(".bright-idea");
     var solarIncluded = document.querySelector(".solar-included");
     var logo = document.querySelector(".logo");
-
-      sun: !!sun,
-      bird: !!bird,
-      brightIdea: !!brightIdea,
-      solarIncluded: !!solarIncluded,
-      logo: !!logo,
-    });
 
     tl = gsap.timeline({
       delay: 0.25,
