@@ -18,35 +18,35 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
-          cache-dependency-path: "fid20738/package-lock.json"
+          cache-dependency-path: "tac25027/package-lock.json"
 
       - name: Install dependencies
-        working-directory: ./fid20738
+        working-directory: ./tac25027
         run: npm ci
 
       - name: Process templates and build banners
-        working-directory: ./fid20738
+        working-directory: ./tac25027
         run: |
           npm run process-templates
           npm run build
           npm run review
 
       - name: Create deployment zips
-        working-directory: ./fid20738
+        working-directory: ./tac25027
         run: npm run deploy
 
       - name: Upload banner review
         uses: actions/upload-artifact@v4
         with:
           name: pr-${{ github.event.number }}-review
-          path: fid20738/_review/
+          path: tac25027/_review/
           retention-days: 14
 
       - name: Upload deployment zips
         uses: actions/upload-artifact@v4
         with:
           name: pr-${{ github.event.number }}-deploy
-          path: fid20738/_deploy/
+          path: tac25027/_deploy/
           retention-days: 14
 
       - name: Comment PR with preview links
@@ -105,4 +105,3 @@ jobs:
                 body: comment
               });
             }
-

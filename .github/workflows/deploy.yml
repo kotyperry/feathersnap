@@ -20,14 +20,14 @@ jobs:
         with:
           node-version: "18"
           cache: "npm"
-          cache-dependency-path: "fid20738/package-lock.json"
+          cache-dependency-path: "tac25027/package-lock.json"
 
       - name: Install dependencies
-        working-directory: ./fid20738
+        working-directory: ./tac25027
         run: npm ci
 
       - name: Process templates and build banners
-        working-directory: ./fid20738
+        working-directory: ./tac25027
         run: |
           npm run process-templates
           npm run build
@@ -37,7 +37,7 @@ jobs:
         run: |
           mkdir -p public
           cp *.html public/ 2>/dev/null || echo "No HTML files in root to copy"
-          cp -r fid20738/_review public/fid20738
+          cp -r tac25027/_review public/tac25027
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -85,4 +85,3 @@ jobs:
           name: template-validation
           path: _template/
           retention-days: 7
-
