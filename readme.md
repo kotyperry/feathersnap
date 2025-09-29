@@ -181,7 +181,7 @@ your-project/
 | `npm run banners:list`             | List existing banners                  |
 | `npm run banners:cleanup <sizes>`  | Remove specific banner sizes           |
 
-## 📚 Documentation
+## 📚 Documentation Notes
 
 - [Build Migration Guide](BUILD_MIGRATION.md) - Complete migration details
 - [GitHub Actions Guide](GITHUB_ACTIONS_MIGRATION.md) - CI/CD setup
