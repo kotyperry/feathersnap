@@ -29,14 +29,14 @@ pages:
   script:
     - mkdir public
     - cp *.html public/
-    - cp -a fid20738/_review public/fid20738
+    - cp -a tac25027/_review public/tac25027
 
 # New GitHub Actions
 - name: Create deployment directory
   run: |
     mkdir -p public
     cp *.html public/ 2>/dev/null || echo "No HTML files in root to copy"
-    cp -r fid20738/_review public/fid20738
+    cp -r tac25027/_review public/tac25027
 ```
 
 **Enhancements**:
@@ -166,7 +166,7 @@ git push origin v1.2.0
 Test the build process locally before pushing:
 
 ```bash
-cd fid20738
+cd tac25027
 npm install
 npm run build
 npm run review
@@ -216,4 +216,3 @@ npm run deploy
 ---
 
 _This migration maintains full backward compatibility while adding significant new functionality for modern banner development workflows._
-

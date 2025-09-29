@@ -40,7 +40,7 @@ npm run deploy:clean           # Clean deployment directory
 
 ## 📁 Starting a New Banner Project
 
-1. **Duplicate Template**: Copy the `/_template/` folder and rename it with your job number/client code (e.g., `fid20738`, `tac25027`)
+1. **Duplicate Template**: Copy the `/_template/` folder and rename it with your job number/client code (e.g., `tac25027`, `tac25027`)
 
 2. **Update Project Info**: Edit `package.json` in your new project folder:
 
