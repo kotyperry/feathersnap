@@ -45,6 +45,7 @@ var timeline = (function MasterTimeline() {
     // Set initial positions and create timeline with label
     mainTl
       .addLabel("start")
+      .set(".bg", { "z-index": 1 })
       .set(".bird", { x: -200 })
       .set(".feeder", { x: 100, autoAlpha: 0 })
       .set(".birds-are-cool", { y: 50, autoAlpha: 0 })

@@ -58,6 +58,7 @@ var timeline = (function MasterTimeline() {
     // Single timeline with labeled timing
     tl.add("start")
       // Set initial positions
+      .set(".bg", { "z-index": 1 })
       .set(".sun", { scale: 0, transformOrigin: "center center" })
       .set(".bird", { x: -300 })
       .set(".bright-idea", { y: 100, autoAlpha: 0 })
