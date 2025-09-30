@@ -75,6 +75,7 @@ var timeline = (function MasterTimeline() {
 
     // Set initial positions for elements that will animate in
     tl.set(".bird", { x: 0, opacity: 0 })
+      .set(".bg", { "z-index": 1 })
       .set(".phone-container", { y: 150, opacity: 0 })
       .set(".phone-screen", { y: 0, opacity: 1 })
       .set(".phone-screen-2", { y: 0, opacity: 1 })

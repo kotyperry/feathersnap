@@ -130,6 +130,10 @@
   z-index: 4;
 }
 
+.bg {
+  z-index: 5;
+}
+
 /* Banner Element Positioning - Adjusted for 970x250 */
 .bird {
   position: absolute;

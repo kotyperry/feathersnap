@@ -75,6 +75,7 @@ var timeline = (function MasterTimeline() {
 
     // Set initial positions for elements that will animate in
     tl.set(".bird", { x: 0, opacity: 0 })
+      .set(".bg", { "z-index": 1 })
       .set(".phone-container", { y: 150, opacity: 0 })
       .set(".phone-screen-2", { y: 0, opacity: 1 })
       .set(".logo", { scale: 0, opacity: 0 })
@@ -87,7 +88,13 @@ var timeline = (function MasterTimeline() {
       // Bird slides in from left
       .from(
         ".bird",
-        { duration: 0.8, x: -200, opacity: 1, ease: "power3.out" },
+        {
+          duration: 0.8,
+          x: -300,
+          opacity: 1,
+          ease: "power3.out",
+          display: "block",
+        },
         "start"
       )
 

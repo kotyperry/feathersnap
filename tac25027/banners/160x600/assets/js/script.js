@@ -54,6 +54,7 @@ var timeline = (function MasterTimeline() {
     tl.add("start")
       // Set initial positions
       .set(".sun", { scale: 0, transformOrigin: "center center" })
+      .set(".bg", { "z-index": 1 })
       .set(".bird", { x: -300 })
       .set(".bright-idea", { y: 100, autoAlpha: 0 })
       .set(".solar-included", { y: 100, autoAlpha: 0 })
