@@ -147,6 +147,13 @@
             font-size: 14px;
         }
         
+        .banner-size {
+            margin-top: 5px;
+            color: #888;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+        }
+        
         .banner-frame-container {
             display: inline-block;
             margin: 20px 0;
@@ -298,6 +305,7 @@
             <div class="banner-info" id="banner-info">
                 <h2>970x90</h2>
                 <p>970 × 90 pixels</p>
+                <p class="banner-size">Bundle size: 173.1 KB</p>
             </div>
             <div class="banner-frame-container">
                 <div class="banner-frame" id="banner-frame" style="width: 970px; height: 90px;">
@@ -311,6 +319,7 @@
                 </div>
             </div>
             <div class="banner-actions">
+                <button onclick="replayBanner()" class="btn">Replay</button>
                 <a href="banners/970x90/index.html" target="_blank" class="btn" id="view-full-btn">View Full</a>
                 <a href="banners/970x90" target="_blank" class="btn btn-secondary" id="view-files-btn">View Files</a>
             </div>
@@ -319,7 +328,7 @@
     
     <script>
         // Banner data
-        const banners = [{"name":"970x90","width":970,"height":90,"path":"banners/970x90"},{"name":"970x250","width":970,"height":250,"path":"banners/970x250"},{"name":"728x90","width":728,"height":90,"path":"banners/728x90"},{"name":"336x280","width":336,"height":280,"path":"banners/336x280"},{"name":"320x50","width":320,"height":50,"path":"banners/320x50"},{"name":"320x480","width":320,"height":480,"path":"banners/320x480"},{"name":"300x600","width":300,"height":600,"path":"banners/300x600"},{"name":"300x50","width":300,"height":50,"path":"banners/300x50"},{"name":"300x250","width":300,"height":250,"path":"banners/300x250"},{"name":"160x600","width":160,"height":600,"path":"banners/160x600"}];
+        const banners = [{"name":"970x90","width":970,"height":90,"path":"banners/970x90","sizeBytes":177231,"sizeFormatted":"173.1 KB"},{"name":"970x250","width":970,"height":250,"path":"banners/970x250","sizeBytes":407333,"sizeFormatted":"397.8 KB"},{"name":"728x90","width":728,"height":90,"path":"banners/728x90","sizeBytes":171991,"sizeFormatted":"168 KB"},{"name":"336x280","width":336,"height":280,"path":"banners/336x280","sizeBytes":208657,"sizeFormatted":"203.8 KB"},{"name":"320x50","width":320,"height":50,"path":"banners/320x50","sizeBytes":78738,"sizeFormatted":"76.9 KB"},{"name":"320x480","width":320,"height":480,"path":"banners/320x480","sizeBytes":210171,"sizeFormatted":"205.2 KB"},{"name":"300x600","width":300,"height":600,"path":"banners/300x600","sizeBytes":255851,"sizeFormatted":"249.9 KB"},{"name":"300x50","width":300,"height":50,"path":"banners/300x50","sizeBytes":91330,"sizeFormatted":"89.2 KB"},{"name":"300x250","width":300,"height":250,"path":"banners/300x250","sizeBytes":153994,"sizeFormatted":"150.4 KB"},{"name":"160x600","width":160,"height":600,"path":"banners/160x600","sizeBytes":153568,"sizeFormatted":"150 KB"}];
         let currentBanner = 0;
         
         // Hamburger menu toggle
@@ -339,6 +348,11 @@
             }
         });
         
+        // Replay banner function
+        function replayBanner() {
+            loadBanner(currentBanner);
+        }
+        
         // Load banner function
         function loadBanner(index) {
             currentBanner = index;
@@ -353,6 +367,7 @@
             document.getElementById('banner-info').innerHTML = `
                 <h2>${banner.name}</h2>
                 <p>${banner.width} × ${banner.height} pixels</p>
+                <p class="banner-size">Bundle size: ${banner.sizeFormatted}</p>
             `;
             
             // Update frame size
