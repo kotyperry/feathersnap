@@ -29,6 +29,46 @@ class ReviewGenerator {
   }
 
   /**
+   * Calculate total size of all files in a directory
+   * @param {string} dirPath - Path to directory
+   * @returns {number} - Total size in bytes
+   */
+  getDirectorySize(dirPath) {
+    let totalSize = 0;
+
+    const calculateSize = (currentPath) => {
+      const items = fs.readdirSync(currentPath);
+
+      for (const item of items) {
+        const itemPath = path.join(currentPath, item);
+        const stats = fs.statSync(itemPath);
+
+        if (stats.isDirectory()) {
+          calculateSize(itemPath);
+        } else {
+          totalSize += stats.size;
+        }
+      }
+    };
+
+    calculateSize(dirPath);
+    return totalSize;
+  }
+
+  /**
+   * Format bytes to human readable format
+   * @param {number} bytes - Size in bytes
+   * @returns {string} - Formatted size
+   */
+  formatBytes(bytes) {
+    if (bytes === 0) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+  }
+
+  /**
    * Get banner information
    */
   getBannerInfo() {
@@ -40,11 +80,17 @@ class ReviewGenerator {
       const width = sizeMatch ? sizeMatch[1] : "300";
       const height = sizeMatch ? sizeMatch[2] : "250";
 
+      // Calculate total file size
+      const totalBytes = this.getDirectorySize(dir);
+      const formattedSize = this.formatBytes(totalBytes);
+
       return {
         name,
         width: parseInt(width),
         height: parseInt(height),
         path: dir,
+        sizeBytes: totalBytes,
+        sizeFormatted: formattedSize,
       };
     });
   }
@@ -205,6 +251,13 @@ class ReviewGenerator {
             font-size: 14px;
         }
         
+        .banner-size {
+            margin-top: 5px;
+            color: #888;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+        }
+        
         .banner-frame-container {
             display: inline-block;
             margin: 20px 0;
@@ -308,6 +361,9 @@ class ReviewGenerator {
             <div class="banner-info" id="banner-info">
                 <h2>${banners[0].name}</h2>
                 <p>${banners[0].width} × ${banners[0].height} pixels</p>
+                <p class="banner-size">Bundle size: ${
+                  banners[0].sizeFormatted
+                }</p>
             </div>
             <div class="banner-frame-container">
                 <div class="banner-frame" id="banner-frame" style="width: ${
@@ -323,6 +379,7 @@ class ReviewGenerator {
                 </div>
             </div>
             <div class="banner-actions">
+                <button onclick="replayBanner()" class="btn">Replay</button>
                 <a href="${
                   banners[0].path
                 }/index.html" target="_blank" class="btn" id="view-full-btn">View Full</a>
@@ -355,6 +412,11 @@ class ReviewGenerator {
             }
         });
         
+        // Replay banner function
+        function replayBanner() {
+            loadBanner(currentBanner);
+        }
+        
         // Load banner function
         function loadBanner(index) {
             currentBanner = index;
@@ -369,6 +431,7 @@ class ReviewGenerator {
             document.getElementById('banner-info').innerHTML = \`
                 <h2>\${banner.name}</h2>
                 <p>\${banner.width} × \${banner.height} pixels</p>
+                <p class="banner-size">Bundle size: \${banner.sizeFormatted}</p>
             \`;
             
             // Update frame size

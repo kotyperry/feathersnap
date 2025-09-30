@@ -55,7 +55,7 @@ var timeline = (function MasterTimeline() {
       .set(".bg", { "z-index": 1 })
       .set(".camera", { x: -200, autoAlpha: 0 })
       .set(".feeder", { y: 50, autoAlpha: 0 })
-      .set(".logo", { scale: 0, autoAlpha: 0 })
+      .set(".logo", { scale: 0, autoAlpha: 0, opacity: 0 })
       .set(".f-letter", { opacity: 0 })
       .set(".i-letter", { opacity: 0 })
       .set(".y-letter", { opacity: 0 })
