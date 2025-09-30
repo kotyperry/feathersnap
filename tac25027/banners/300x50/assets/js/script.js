@@ -51,8 +51,9 @@ var timeline = (function MasterTimeline() {
     // Single timeline with labeled timing
     tl.add("start")
       // Set initial positions
-      .set(".wave", { autoAlpha: 1 })
+      .set(".wave", { autoAlpha: 1, "z-index": 1 })
       .set(".bg", { "z-index": 1 })
+
       .set(".camera", { x: -200, autoAlpha: 0 })
       .set(".feeder", { y: 50, autoAlpha: 0 })
       .set(".logo", { scale: 0, autoAlpha: 0 })
