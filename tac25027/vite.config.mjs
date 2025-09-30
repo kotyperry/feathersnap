@@ -1,8 +1,18 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import { glob } from "glob";
 import injectBannerControls from "./vite-plugins/inject-banner-controls.js";
 import copyBannerScripts from "./vite-plugins/copy-banner-scripts.js";
+import viteImagemin from "@vheemstra/vite-plugin-imagemin";
+import imageminGifsicle from "imagemin-gifsicle";
+import imageminMozjpeg from "imagemin-mozjpeg";
+import imageminPngquant from "imagemin-pngquant";
+import imageminSvgo from "imagemin-svgo";
+
+// ESM equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Get target banner from environment variable or command line argument
 const targetBanner =
@@ -42,7 +52,36 @@ const isDev = process.env.NODE_ENV !== "production";
 const singleBannerDev = isDev && targetBanner && bannerDirs.length === 1;
 
 export default defineConfig({
-  plugins: [injectBannerControls(), copyBannerScripts()],
+  plugins: [
+    injectBannerControls(),
+    copyBannerScripts(),
+    viteImagemin({
+      plugins: {
+        png: imageminPngquant({
+          quality: [0.7, 0.9],
+          speed: 4,
+        }),
+        jpg: imageminMozjpeg({
+          quality: 80,
+        }),
+        gif: imageminGifsicle({
+          optimizationLevel: 3,
+        }),
+        svg: imageminSvgo({
+          plugins: [
+            {
+              name: "preset-default",
+              params: {
+                overrides: {
+                  removeViewBox: false,
+                },
+              },
+            },
+          ],
+        }),
+      },
+    }),
+  ],
   root: singleBannerDev ? bannerDirs[0].dir : ".",
   base: "./",
   build: {

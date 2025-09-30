@@ -32,12 +32,17 @@
     "glob": "^10.3.10"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
+    "@vheemstra/vite-plugin-imagemin": "^2.2.1",
     "autoprefixer": "^10.4.16",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-svgo": "^11.0.1",
     "postcss": "^8.4.32",
     "postcss-advanced-variables": "^3.0.1",
     "postcss-calc": "^9.0.1",
     "postcss-position-alt": "^0.6.3",
-    "postcss-sorting": "^8.0.2"
+    "postcss-sorting": "^8.0.2",
+    "vite": "^5.0.0"
   }
 }
