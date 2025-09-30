@@ -141,6 +141,7 @@
   width: auto;
   height: auto;
   animation: wave-motion 1.5s ease-in-out infinite;
+  z-index: 5;
 }
 
 .camera {

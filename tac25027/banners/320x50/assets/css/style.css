@@ -138,6 +138,7 @@
 
 .wave {
   position: absolute;
+  z-index: 5;
   left: 50px;
   top: 0px;
   width: auto;
